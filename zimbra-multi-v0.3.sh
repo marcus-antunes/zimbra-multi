@@ -11,23 +11,26 @@
 #Current Directory
 pwd=$(pwd)
 #List of names. Only name. Whithout @domain
-LIST="list.txt"
+LIST="$pwd/list.txt"
 # Domain name (Whithout "@")
 DOMAIN="domain.com"
 # Suffix to rename the account. I use to keep disabled account a while in the server before deleting typying the year of changing. But change whatever fit your demand
 SUFFIX="2020"
-
+#Password for reseting passwords in batch
+PASSWORD="Aa4DjUD6"
 
 
 checklist()
 {
 
-	if [ !-f $pwd/list.txt ]
+	if [ -f "$LIST" ]
 		then
-			echo "Please create the file list.txt"
+			$execfunc
 		else
-			$1
+			echo "Please create the file $LIST and set permissions to user zimbra"
 	fi
+	
+
 }
 
 
@@ -101,7 +104,7 @@ resetpassword()
         { while read USERNAME ; do
 
                 echo "Executing Account $USERNAME"
-                zmprov sp $USERNAME@$DOMAIN Aa4DjUD6
+                zmprov sp $USERNAME@$DOMAIN $PASSWORD
 
         done ; } < $LIST
 
@@ -170,39 +173,42 @@ configforward()
 
 
 
-
-
-
-
-
-
 case $1 in
 
         activate)
+			execfunc=$1
                 checklist
                 ;;			
         resetpassword)
+			execfunc=$1
                 checklist
                 ;;		
         sizeof)
-                checklist
+			execfunc=$1
+				checklist
                 ;;						
         rename)
+			execfunc=$1
                 checklist
                 ;;
         configalias)
+			execfunc=$1
                 checklist
                 ;;				
         lock)
+			execfunc=$1
                 checklist
                 ;;
 		delete)
+			execfunc=$1
                 checklist
                 ;;
         cleanlists)
+			execfunc=$1
                 checklist
                 ;;
         configforward)
+			execfunc=$1
                 checklist
                 ;;
         *)
