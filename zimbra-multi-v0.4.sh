@@ -134,7 +134,7 @@ adduserstolist()
 
                 echo "Executing distributionlist $USERNAME"
 
-                zmprov aaa $distributionlist $USERNAME@$DOMAIN
+                zmprov adlm $distributionlist $USERNAME@$DOMAIN
 
         done ; } < $LIST
 
